@@ -1,0 +1,15 @@
+﻿@model ConsidLibrary.Models.LibraryItem
+@{
+    ViewBag.Title = "CheckedIN";
+}
+
+<h2>Checked In</h2>
+
+<div>
+    <h4>Thanks</h4>
+    <hr />
+    <p>@Model.Title is now returned to the library.</p>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

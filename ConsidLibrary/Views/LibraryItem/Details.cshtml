@@ -1,0 +1,89 @@
+﻿@model ConsidLibrary.Models.ViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LibraryItem</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.libraryItem.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libraryItem.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.libraryItem.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libraryItem.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.libraryItem.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libraryItem.Author)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.libraryItem.Pages)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libraryItem.Pages)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.libraryItem.RunTimeMinutes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libraryItem.RunTimeMinutes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.libraryItem.IsBorrowable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libraryItem.IsBorrowable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.libraryItem.Borrower)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libraryItem.Borrower)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.libraryItem.BorrowDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libraryItem.BorrowDate)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.libraryItem.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
