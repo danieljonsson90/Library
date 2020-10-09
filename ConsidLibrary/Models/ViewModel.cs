@@ -10,5 +10,7 @@ namespace ConsidLibrary.Models
         public LibraryItem libraryItem { get; set; }
         public Category category { get; set; }
         public Employee employee { get; set; }
+        public string[] titleAcronyms { get; set; }
+        public IEnumerable<LibraryItem> listOfLibraryItems { get; set; }
     }
 }

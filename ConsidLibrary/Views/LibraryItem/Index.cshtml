@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ConsidLibrary.Models.LibraryItem>
+﻿@model ConsidLibrary.Models.ViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -20,66 +20,68 @@
             @Html.ActionLink("Type", "Index", new { sortOrder = ViewBag.TypeSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => Model.libraryItem.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Author)
+            @Html.DisplayNameFor(model => model.libraryItem.Author)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pages)
+            @Html.DisplayNameFor(model => model.libraryItem.Pages)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RunTimeMinutes)
+            @Html.DisplayNameFor(model => model.libraryItem.RunTimeMinutes)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsBorrowable)
+            @Html.DisplayNameFor(model => model.libraryItem.IsBorrowable)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Borrower)
+            @Html.DisplayNameFor(model => model.libraryItem.Borrower)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BorrowDate)
+            @Html.DisplayNameFor(model => model.libraryItem.BorrowDate)
         </th>
         <th></th>
     </tr>
+    @{int i = 0;}
+    @foreach (var item in Model.listOfLibraryItems)
+    {
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Category.CategoryName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Type)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Title)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Author)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Pages)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.RunTimeMinutes)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.IsBorrowable)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Borrower)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.BorrowDate)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("Details", "Details", new { id = item.Id }) | <br />
-        @Html.ActionLink("Check Out", "CheckOut", new { id = item.Id }) |
-        @Html.ActionLink("Check In", "CheckIn", new { id = item.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-    </td>
-</tr>
-}
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title) <span>@Model.titleAcronyms[i]</span> @{i++;}
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pages)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RunTimeMinutes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsBorrowable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Borrower)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) | <br />
+                @Html.ActionLink("Check Out", "CheckOut", new { id = item.Id }) |
+                @Html.ActionLink("Check In", "CheckIn", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

@@ -23,7 +23,7 @@ namespace ConsidLibrary.Controllers
 
             var libraryItems = db.LibraryItem.Include(l => l.Category);
             libraryItems = from s in libraryItems select s;
-            switch(sortOrder)
+            switch (sortOrder)
             {
                 case "type_desc":
                     libraryItems = libraryItems.OrderByDescending(s => s.Type);
@@ -39,7 +39,47 @@ namespace ConsidLibrary.Controllers
                     libraryItems = libraryItems.OrderBy(s => s.Category.CategoryName);
                     break;
             }
-            return View(libraryItems.ToList());
+            var size = libraryItems.Count();
+            string[] acronyms = new string[size];
+            
+            var item = libraryItems.ToList();
+
+            for (int i = 0; i < libraryItems.Count(); i++)
+            {
+                var res = item[i].Title.Split(' ');
+                acronyms[i] += "(";
+                for (int j = 0; j < res.Length; j++)
+                {
+                    var c = res[j][0];
+                    acronyms[i]+= c.ToString().ToUpper();
+                }
+                acronyms[i] += ")";
+            }
+            
+            var viewModel = new ViewModel { listOfLibraryItems = libraryItems.ToList(), titleAcronyms = acronyms };
+            
+            return View(viewModel);
+        }
+
+        private string GetAcronym(string title)
+        {
+            return title.Split(' ').ToList().ToString();
+           /* char[] array = null;
+            if(title == null)
+            {
+                return null;
+            }
+            int count = 0;
+            array[count] = title[0];
+            for(int i = 2; i<title.Length; i++)
+            {
+                if(title[i-1] == ' ')
+                {
+                    count++;
+                    array[count] = title[i];
+                }
+            }
+            return new string(array);*/
         }
 
         // GET: LibraryItem/Details/5
