@@ -159,11 +159,21 @@
     <Compile Include="Migrations\202010081307047_DateNullable.designer.cs">
       <DependentUpon>202010081307047_DateNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010091446006_titleRequired.cs" />
+    <Compile Include="Migrations\202010091446006_titleRequired.designer.cs">
+      <DependentUpon>202010091446006_titleRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010091500090_requiredFields.cs" />
+    <Compile Include="Migrations\202010091500090_requiredFields.designer.cs">
+      <DependentUpon>202010091500090_requiredFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryItem.cs" />
+    <Compile Include="Models\LibraryTypes.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -253,6 +263,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010081307047_DateNullable.resx">
       <DependentUpon>202010081307047_DateNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010091446006_titleRequired.resx">
+      <DependentUpon>202010091446006_titleRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010091500090_requiredFields.resx">
+      <DependentUpon>202010091500090_requiredFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

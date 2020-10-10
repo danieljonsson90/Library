@@ -90,3 +90,5 @@ C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.InitialModel.resources
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.ChangedLibraryItem.resources
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.DateNullable.resources
+C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.titleRequired.resources
+C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.requiredFields.resources

@@ -61,26 +61,6 @@ namespace ConsidLibrary.Controllers
             return View(viewModel);
         }
 
-        private string GetAcronym(string title)
-        {
-            return title.Split(' ').ToList().ToString();
-           /* char[] array = null;
-            if(title == null)
-            {
-                return null;
-            }
-            int count = 0;
-            array[count] = title[0];
-            for(int i = 2; i<title.Length; i++)
-            {
-                if(title[i-1] == ' ')
-                {
-                    count++;
-                    array[count] = title[i];
-                }
-            }
-            return new string(array);*/
-        }
 
         // GET: LibraryItem/Details/5
         public ActionResult Details(int? id)
@@ -125,6 +105,9 @@ namespace ConsidLibrary.Controllers
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", libraryItem.CategoryId);
+            
+            var libratyTypes = new LibraryTypes {Book = "Book", DVD = "DVD", AudioBook = "Audio Book",ReferenceBook = "Reference Book"};
+            
             return View(libraryItem);
         }
 
@@ -189,18 +172,19 @@ namespace ConsidLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            if (libraryItem.Borrower != null)
+            if (libraryItem.IsBorrowable)
             {
-                libraryItem.BorrowDate = null;
-                libraryItem.Borrower = null;
-                db.SaveChanges();
-                return View(libraryItem);
+                if (libraryItem.Borrower != null)
+                {
+                    libraryItem.BorrowDate = null;
+                    libraryItem.Borrower = null;
+                    db.SaveChanges();
+                    return View(libraryItem);
+                }
             }
-            else
-            {
+            
                 return RedirectToAction("ItemNotBorrowed");
-                
-            }
+
         }
 
         public ActionResult ItemNotBorrowed()
