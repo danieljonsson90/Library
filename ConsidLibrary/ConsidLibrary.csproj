@@ -147,10 +147,6 @@
     <Compile Include="Migrations\202010071013336_InitialCreate.designer.cs">
       <DependentUpon>202010071013336_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202010071102433_InitialModel.cs" />
-    <Compile Include="Migrations\202010071102433_InitialModel.designer.cs">
-      <DependentUpon>202010071102433_InitialModel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202010080656495_ChangedLibraryItem.cs" />
     <Compile Include="Migrations\202010080656495_ChangedLibraryItem.designer.cs">
       <DependentUpon>202010080656495_ChangedLibraryItem.cs</DependentUpon>
@@ -159,29 +155,9 @@
     <Compile Include="Migrations\202010081307047_DateNullable.designer.cs">
       <DependentUpon>202010081307047_DateNullable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202010091446006_titleRequired.cs" />
-    <Compile Include="Migrations\202010091446006_titleRequired.designer.cs">
-      <DependentUpon>202010091446006_titleRequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010091500090_requiredFields.cs" />
-    <Compile Include="Migrations\202010091500090_requiredFields.designer.cs">
-      <DependentUpon>202010091500090_requiredFields.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010101627440_removedRequired.cs" />
-    <Compile Include="Migrations\202010101627440_removedRequired.designer.cs">
-      <DependentUpon>202010101627440_removedRequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010101806035_removetable.cs" />
-    <Compile Include="Migrations\202010101806035_removetable.designer.cs">
-      <DependentUpon>202010101806035_removetable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010110743444_bookclass.cs" />
-    <Compile Include="Migrations\202010110743444_bookclass.designer.cs">
-      <DependentUpon>202010110743444_bookclass.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010110806297_removeReq.cs" />
-    <Compile Include="Migrations\202010110806297_removeReq.designer.cs">
-      <DependentUpon>202010110806297_removeReq.cs</DependentUpon>
+    <Compile Include="Migrations\202010121040585_changeDatabase.cs" />
+    <Compile Include="Migrations\202010121040585_changeDatabase.designer.cs">
+      <DependentUpon>202010121040585_changeDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AudioBook.cs" />
@@ -280,32 +256,14 @@
     <EmbeddedResource Include="Migrations\202010071013336_InitialCreate.resx">
       <DependentUpon>202010071013336_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010071102433_InitialModel.resx">
-      <DependentUpon>202010071102433_InitialModel.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010080656495_ChangedLibraryItem.resx">
       <DependentUpon>202010080656495_ChangedLibraryItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010081307047_DateNullable.resx">
       <DependentUpon>202010081307047_DateNullable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010091446006_titleRequired.resx">
-      <DependentUpon>202010091446006_titleRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010091500090_requiredFields.resx">
-      <DependentUpon>202010091500090_requiredFields.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010101627440_removedRequired.resx">
-      <DependentUpon>202010101627440_removedRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010101806035_removetable.resx">
-      <DependentUpon>202010101806035_removetable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010110743444_bookclass.resx">
-      <DependentUpon>202010110743444_bookclass.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010110806297_removeReq.resx">
-      <DependentUpon>202010110806297_removeReq.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010121040585_changeDatabase.resx">
+      <DependentUpon>202010121040585_changeDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

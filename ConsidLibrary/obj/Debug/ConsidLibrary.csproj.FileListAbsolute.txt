@@ -87,12 +87,6 @@ C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\bin\Microsoft.AspNet.Ide
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.InitialCreate.resources
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.csproj.GenerateResource.cache
-C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.InitialModel.resources
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.ChangedLibraryItem.resources
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.DateNullable.resources
-C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.titleRequired.resources
-C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.requiredFields.resources
-C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.removedRequired.resources
-C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.removetable.resources
-C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.bookclass.resources
-C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.removeReq.resources
+C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.changeDatabase.resources

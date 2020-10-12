@@ -7,13 +7,13 @@ namespace ConsidLibrary.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class requiredFields : IMigrationMetadata
+    public sealed partial class changeDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(requiredFields));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(changeDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "202010091500090_requiredFields"; }
+            get { return "202010121040585_changeDatabase"; }
         }
         
         string IMigrationMetadata.Source
