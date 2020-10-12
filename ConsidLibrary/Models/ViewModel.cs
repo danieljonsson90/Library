@@ -13,5 +13,6 @@ namespace ConsidLibrary.Models
         public string[] titleAcronyms { get; set; }
         public CheckOut checkOut { get; set; }
         public IEnumerable<LibraryItem> listOfLibraryItems { get; set; }
+        public Book book { get; set; }
     }
 }

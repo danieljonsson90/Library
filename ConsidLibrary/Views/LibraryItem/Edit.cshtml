@@ -84,6 +84,9 @@
     @{ if (Model.IsBorrowable)
         {
             @Html.ActionLink("Check Out", "CheckOut", Model)
+        }else
+        {
+            <span>This item is not borrowable and can therfore not be checked out.</span>
         }
     }
 </div>

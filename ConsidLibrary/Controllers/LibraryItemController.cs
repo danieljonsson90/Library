@@ -91,6 +91,7 @@ namespace ConsidLibrary.Controllers
             return View(libraryItem);
         }
 
+        
         public ActionResult Book(LibraryItem libraryItem)
         {
             if (libraryItem == null)
@@ -118,6 +119,7 @@ namespace ConsidLibrary.Controllers
             {
                 try
                 {
+                    
                     libraryItem.IsBorrowable = true;
                     db.LibraryItem.Add(libraryItem);
                     db.SaveChanges();
@@ -135,10 +137,10 @@ namespace ConsidLibrary.Controllers
 
         public ActionResult ReferenceBook(LibraryItem libraryItem)
         {
-            /*if (libraryItem.Id == null)
+            if (libraryItem == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }*/
+            }
             var referenceBook = new ReferenceBook { };
 
             //LibraryItem Item = db.LibraryItem.Find(libraryItem.Id);
@@ -150,10 +152,10 @@ namespace ConsidLibrary.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ReferenceBookPost(LibraryItem libraryItem)
         {
-            /*if (id == null)
+            if (libraryItem == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }*/
+            }
             var referenceBook = new ReferenceBook { };
             if (TryUpdateModel(referenceBook, "",
                new string[] { "Title", "Author", "Pages" }))
@@ -177,10 +179,10 @@ namespace ConsidLibrary.Controllers
 
         public ActionResult DVD(LibraryItem libraryItem)
         {
-            /*if (libraryItem.Id == null)
+            if (libraryItem == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }*/
+            }
             var dvd = new DVD { };
 
             //LibraryItem Item = db.LibraryItem.Find(libraryItem.Id);
@@ -192,10 +194,10 @@ namespace ConsidLibrary.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DVDPost(LibraryItem libraryItem)
         {
-            /*if (id == null)
+            if (libraryItem == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }*/
+            }
             var dvd = new DVD { };
             if (TryUpdateModel(dvd, "",
                new string[] { "Title", "RunTimeMinutes" }))
@@ -234,10 +236,10 @@ namespace ConsidLibrary.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AudioBookPost(LibraryItem libraryItem)
         {
-            /*if (id == null)
+            if (libraryItem == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }*/
+            }
 
             //Have to create the right class (audioBook here) so that the required fields are right.
             var audioBook = new AudioBook { };
@@ -262,12 +264,12 @@ namespace ConsidLibrary.Controllers
         }
 
 
-        public ActionResult RedirectToCheckOut(int? id)
+        /*public ActionResult RedirectToCheckOut(int? id)
         {
             LibraryItem libraryItem = db.LibraryItem.Find(id);
             return RedirectToAction("CheckOut", libraryItem);
 
-        }
+        }*/
 
         [HttpGet]
         [ActionName("CheckOut")]
@@ -295,8 +297,6 @@ namespace ConsidLibrary.Controllers
             
                 try
                 {
-                    
-                    db.LibraryItem.Add(libraryItem);
                     db.SaveChanges();
 
                     return RedirectToAction("Details", new { id = libraryItem.Id });
@@ -344,6 +344,46 @@ namespace ConsidLibrary.Controllers
         }
 
         // GET: LibraryItem/Edit/5
+        /* public ActionResult Edit(int? id)
+         {
+             if (id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+             LibraryItem libraryItem = db.LibraryItem.Find(id);
+             if (libraryItem == null)
+             {
+                 return HttpNotFound();
+             }
+             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", libraryItem.CategoryId);
+             return View(libraryItem);
+         }*/
+
+        /*[HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,CategoryId,Type")] LibraryItem libraryItem)
+        {
+            if (ModelState.IsValid)
+            {
+                switch(libraryItem.Type)
+                {
+                    case "Book":
+                        return RedirectToAction("EditBook",libraryItem );
+                    case "Audio Book":
+                        return RedirectToAction("AudioBook", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
+                    case "Reference Book":
+                        return RedirectToAction("ReferenceBook", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
+                    case "DVD":
+                        return RedirectToAction("DVD", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
+                    default:
+                        return RedirectToAction("Index");
+                }
+            }
+
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", libraryItem.CategoryId);
+            return View(libraryItem);
+        }*/
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -358,7 +398,6 @@ namespace ConsidLibrary.Controllers
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", libraryItem.CategoryId);
             return View(libraryItem);
         }
-
 
 
         // POST: LibraryItem/Edit/5
