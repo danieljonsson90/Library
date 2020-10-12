@@ -32,28 +32,6 @@ namespace ConsidLibrary.Controllers
             return View(viewModel);
         }
 
-
-        // GET: LibraryItem/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            LibraryItem libraryItem = db.LibraryItem.Find(id);
-            Category category = db.Categories.Find(libraryItem.CategoryId);
-            var viewModel = new ViewModel { libraryItem = libraryItem, category = category };
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            if (libraryItem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(viewModel);
-        }
-
         // GET: LibraryItem/Create
         public ActionResult Create()
         {
@@ -68,30 +46,62 @@ namespace ConsidLibrary.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CategoryId,Type")] LibraryItem libraryItem)
         {
-            
+
             if (ModelState.IsValid)
             {
-                switch(libraryItem.Type)
+                if (libraryItem.CategoryId != 0)
                 {
-                    case "Book":
-                        return RedirectToAction("Book",new LibraryItem { Id = libraryItem.Id, CategoryId =libraryItem.CategoryId, Type = libraryItem.Type } );
-                    case "Audio Book":
-                        return RedirectToAction("AudioBook", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
-                    case "Reference Book":
-                        return RedirectToAction("ReferenceBook", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
-                    case "DVD":
-                        return RedirectToAction("DVD", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
-                    default:
-                        return RedirectToAction("Index");
+                    switch (libraryItem.Type)
+                    {
+                        case "Book":
+                            return RedirectToAction("Book", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
+                        case "Audio Book":
+                            return RedirectToAction("AudioBook", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
+                        case "Reference Book":
+                            return RedirectToAction("ReferenceBook", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
+                        case "DVD":
+                            return RedirectToAction("DVD", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
+                        default:
+                            return RedirectToAction("Index");
+                    }
+                }else
+                {
+                    
+                    return RedirectToAction("CreateCategory");
                 }
             }
-
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", libraryItem.CategoryId);
 
             return View(libraryItem);
         }
 
-        
+        // GET: LibraryItem/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LibraryItem libraryItem = db.LibraryItem.Find(id);
+            if (libraryItem == null)
+            {
+                return HttpNotFound();
+            }
+            return View(libraryItem);
+        }
+
+        // POST: LibraryItem/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            LibraryItem libraryItem = db.LibraryItem.Find(id);
+            db.LibraryItem.Remove(libraryItem);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
         public ActionResult Book(LibraryItem libraryItem)
         {
             if (libraryItem == null)
@@ -132,7 +142,7 @@ namespace ConsidLibrary.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
             }
-            return View(libraryItem);
+            return View(book);
         }
 
         public ActionResult ReferenceBook(LibraryItem libraryItem)
@@ -174,7 +184,7 @@ namespace ConsidLibrary.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
             }
-            return View(libraryItem);
+            return View(referenceBook);
         }
 
         public ActionResult DVD(LibraryItem libraryItem)
@@ -216,7 +226,7 @@ namespace ConsidLibrary.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
             }
-            return View(libraryItem);
+            return View(dvd);
         }
 
         public ActionResult AudioBook(LibraryItem libraryItem)
@@ -260,16 +270,9 @@ namespace ConsidLibrary.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
             }
-            return View(libraryItem);
+            return View(audioBook);
         }
 
-
-        /*public ActionResult RedirectToCheckOut(int? id)
-        {
-            LibraryItem libraryItem = db.LibraryItem.Find(id);
-            return RedirectToAction("CheckOut", libraryItem);
-
-        }*/
 
         [HttpGet]
         [ActionName("CheckOut")]
@@ -311,11 +314,6 @@ namespace ConsidLibrary.Controllers
             return View(checkOut);
         }
 
-        public ActionResult NotBorrowable()
-        {
-            return View();
-        }
-
         public ActionResult CheckIn(int? id)
         {
             var libraryItem = db.LibraryItem.Find(id);
@@ -338,10 +336,26 @@ namespace ConsidLibrary.Controllers
 
         }
 
-        public ActionResult ItemNotBorrowed()
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LibraryItem libraryItem = db.LibraryItem.Find(id);
+            Category category = db.Categories.Find(libraryItem.CategoryId);
+            var viewModel = new ViewModel { libraryItem = libraryItem, category = category };
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+            if (libraryItem == null)
+            {
+                return HttpNotFound();
+            }
+            return View(viewModel);
         }
+
 
         // GET: LibraryItem/Edit/5
         /* public ActionResult Edit(int? id)
@@ -418,31 +432,27 @@ namespace ConsidLibrary.Controllers
             return View(libraryItem);
         }
 
-        // GET: LibraryItem/Delete/5
-        public ActionResult Delete(int? id)
+        
+        /// <summary>
+        /// Below are the Views that is displayed to inform that some actions or functions 
+        /// are not possible or allowed in the application. Like a page that informs that it is not
+        /// possible to create a library item when there is no Category created.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult CreateCategory()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            LibraryItem libraryItem = db.LibraryItem.Find(id);
-            if (libraryItem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(libraryItem);
+            return View();
+        }
+        public ActionResult NotBorrowable()
+        {
+            return View();
         }
 
-        // POST: LibraryItem/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult ItemNotBorrowed()
         {
-            LibraryItem libraryItem = db.LibraryItem.Find(id);
-            db.LibraryItem.Remove(libraryItem);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            return View();
         }
+
 
         protected override void Dispose(bool disposing)
         {

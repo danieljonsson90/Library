@@ -29,8 +29,5 @@ namespace ConsidLibrary.Models
         [Required(ErrorMessage = "Type is required.")]
         public string Type { get; set; }
 
-        [NotMapped] // Makes it possible to use same actions as when creating new libraryItems
-        public bool FromEdit { get; set; }
-
     }
 }

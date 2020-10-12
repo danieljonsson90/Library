@@ -207,8 +207,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\LibraryItem\Create.cshtml" />
     <Content Include="Views\LibraryItem\Delete.cshtml" />
@@ -235,6 +233,8 @@
     <Content Include="Views\LibraryItem\DVD.cshtml" />
     <Content Include="Views\LibraryItem\ReferenceBook.cshtml" />
     <Content Include="Views\LibraryItem\AudioBook.cshtml" />
+    <Content Include="Views\LibraryItem\CreateCategory.cshtml" />
+    <Content Include="Views\Home\GetStarted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
