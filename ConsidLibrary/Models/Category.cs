@@ -13,7 +13,6 @@ namespace ConsidLibrary.Models
     }
     public class Category
     {
-        [Required(ErrorMessage = "CategoryId is required. Create a Category to choose a categoryId.")]
         public int Id { get; set; }
         
         [Required(ErrorMessage = "CateoryName is required.")]

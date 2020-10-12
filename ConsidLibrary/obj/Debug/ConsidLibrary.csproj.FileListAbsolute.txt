@@ -92,3 +92,7 @@ C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.DateNullable.resources
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.titleRequired.resources
 C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.requiredFields.resources
+C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.removedRequired.resources
+C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.removetable.resources
+C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.bookclass.resources
+C:\Users\danni\source\repos\ConsidLibrary\ConsidLibrary\obj\Debug\ConsidLibrary.Migrations.removeReq.resources

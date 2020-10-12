@@ -17,13 +17,8 @@ namespace ConsidLibrary.Models
         public int Id { get; set; }
         
         public Category Category { get; set; }
-        
         public int CategoryId { get; set; }
-
-        [Required(ErrorMessage = "Title is required.")]
-        public string Title { get; set; }
-
-        [Required(ErrorMessage = "Author is required.")]
+        public string Title { get; set; }        
         public string Author { get; set; }
         public int? Pages  { get; set; }
         public int? RunTimeMinutes { get; set; }
@@ -34,7 +29,8 @@ namespace ConsidLibrary.Models
         [Required(ErrorMessage = "Type is required.")]
         public string Type { get; set; }
 
-        [NotMapped]
-        public List<LibraryTypes> Types { get; set; }
+        [NotMapped] // Makes it possible to use same actions as when creating new libraryItems
+        public bool FromEdit { get; set; }
+
     }
 }

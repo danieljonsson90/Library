@@ -167,13 +167,34 @@
     <Compile Include="Migrations\202010091500090_requiredFields.designer.cs">
       <DependentUpon>202010091500090_requiredFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010101627440_removedRequired.cs" />
+    <Compile Include="Migrations\202010101627440_removedRequired.designer.cs">
+      <DependentUpon>202010101627440_removedRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010101806035_removetable.cs" />
+    <Compile Include="Migrations\202010101806035_removetable.designer.cs">
+      <DependentUpon>202010101806035_removetable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010110743444_bookclass.cs" />
+    <Compile Include="Migrations\202010110743444_bookclass.designer.cs">
+      <DependentUpon>202010110743444_bookclass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010110806297_removeReq.cs" />
+    <Compile Include="Migrations\202010110806297_removeReq.designer.cs">
+      <DependentUpon>202010110806297_removeReq.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AudioBook.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CheckOut.cs" />
+    <Compile Include="Models\DVD.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryItem.cs" />
-    <Compile Include="Models\LibraryTypes.cs" />
+    <Compile Include="Models\ReferenceBook.cs" />
+    <Compile Include="Models\StringHelper.cs" />
+    <Compile Include="Models\SwitchHelper.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -234,6 +255,10 @@
     <Content Include="Views\LibraryItem\NotBorrowable.cshtml" />
     <Content Include="Views\LibraryItem\CheckIn.cshtml" />
     <Content Include="Views\LibraryItem\ItemNotBorrowed.cshtml" />
+    <Content Include="Views\LibraryItem\Book.cshtml" />
+    <Content Include="Views\LibraryItem\DVD.cshtml" />
+    <Content Include="Views\LibraryItem\ReferenceBook.cshtml" />
+    <Content Include="Views\LibraryItem\AudioBook.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -269,6 +294,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010091500090_requiredFields.resx">
       <DependentUpon>202010091500090_requiredFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010101627440_removedRequired.resx">
+      <DependentUpon>202010101627440_removedRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010101806035_removetable.resx">
+      <DependentUpon>202010101806035_removetable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010110743444_bookclass.resx">
+      <DependentUpon>202010110743444_bookclass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010110806297_removeReq.resx">
+      <DependentUpon>202010110806297_removeReq.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

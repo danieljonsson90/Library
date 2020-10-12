@@ -24,9 +24,9 @@ namespace ConsidLibrary.Controllers
 
         // GET: Categorie/Details/5
 
-        public ActionResult NotUnique()
+        public ActionResult NotUnique(Category category)
         {
-            return View();
+            return View(category);
         }
 
         public ActionResult NoDelete()
@@ -71,7 +71,7 @@ namespace ConsidLibrary.Controllers
                 {
                     if(c.CategoryName == category.CategoryName)
                     {
-                       return RedirectToAction("NotUnique");
+                       return RedirectToAction("NotUnique",category);
                     }   
                 }
                 db.Categories.Add(category);

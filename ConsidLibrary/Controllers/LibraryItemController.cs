@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ConsidLibrary.DAL;
+using ConsidLibrary.Models;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using ConsidLibrary.DAL;
-using ConsidLibrary.Models;
 
 namespace ConsidLibrary.Controllers
 {
@@ -22,42 +20,15 @@ namespace ConsidLibrary.Controllers
             ViewBag.TypeSortParm = sortOrder == "Type" ? "type_desc" : "Type";
 
             var libraryItems = db.LibraryItem.Include(l => l.Category);
-            libraryItems = from s in libraryItems select s;
-            switch (sortOrder)
-            {
-                case "type_desc":
-                    libraryItems = libraryItems.OrderByDescending(s => s.Type);
-                    break;
-                case "Type":
-                    libraryItems = libraryItems.OrderBy(s => s.Type);
-                    break;
-                case "categoryName_desc":
-                    libraryItems = libraryItems.OrderByDescending(s => s.Category.CategoryName);
-
-                    break;
-                default:
-                    libraryItems = libraryItems.OrderBy(s => s.Category.CategoryName);
-                    break;
-            }
+            libraryItems = SwitchHelper.SortOrder(sortOrder, libraryItems);
             var size = libraryItems.Count();
             string[] acronyms = new string[size];
-            
-            var item = libraryItems.ToList();
 
-            for (int i = 0; i < libraryItems.Count(); i++)
-            {
-                var res = item[i].Title.Split(' ');
-                acronyms[i] += "(";
-                for (int j = 0; j < res.Length; j++)
-                {
-                    var c = res[j][0];
-                    acronyms[i]+= c.ToString().ToUpper();
-                }
-                acronyms[i] += ")";
-            }
-            
-            var viewModel = new ViewModel { listOfLibraryItems = libraryItems.ToList(), titleAcronyms = acronyms };
-            
+            var libraryItemsList = libraryItems.ToList();
+            acronyms = StringHelper.CreateAccronyms(acronyms, libraryItemsList, size);
+           
+            var viewModel = new ViewModel { listOfLibraryItems = libraryItemsList, titleAcronyms = acronyms };
+
             return View(viewModel);
         }
 
@@ -95,69 +66,249 @@ namespace ConsidLibrary.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryId,Title,Author,Pages,RunTimeMinutes,IsBorrowable,Borrower,BorrowDate,Type")] LibraryItem libraryItem)
+        public ActionResult Create([Bind(Include = "CategoryId,Type")] LibraryItem libraryItem)
         {
+            
             if (ModelState.IsValid)
             {
-                db.LibraryItem.Add(libraryItem);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                switch(libraryItem.Type)
+                {
+                    case "Book":
+                        return RedirectToAction("Book",new LibraryItem { Id = libraryItem.Id, CategoryId =libraryItem.CategoryId, Type = libraryItem.Type } );
+                    case "Audio Book":
+                        return RedirectToAction("AudioBook", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
+                    case "Reference Book":
+                        return RedirectToAction("ReferenceBook", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
+                    case "DVD":
+                        return RedirectToAction("DVD", new LibraryItem { Id = libraryItem.Id, CategoryId = libraryItem.CategoryId, Type = libraryItem.Type });
+                    default:
+                        return RedirectToAction("Index");
+                }
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", libraryItem.CategoryId);
-            
-            var libratyTypes = new LibraryTypes {Book = "Book", DVD = "DVD", AudioBook = "Audio Book",ReferenceBook = "Reference Book"};
-            
+
             return View(libraryItem);
         }
 
-        public ActionResult CheckOut(int? id)
+        public ActionResult Book(LibraryItem libraryItem)
         {
-            if (id == null)
+            if (libraryItem == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LibraryItem libraryItem = db.LibraryItem.Find(id);
+            var book = new Book { };
+            
+            //LibraryItem Item = db.LibraryItem.Find(libraryItem.Id);
+            return View(book);
+
+        }
+
+        [HttpPost, ActionName("Book")]
+        [ValidateAntiForgeryToken]
+        public ActionResult BookPost(LibraryItem libraryItem)
+        {
             if (libraryItem == null)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (libraryItem.IsBorrowable)
+            var book = new Book { };
+            if (TryUpdateModel(book, "",
+               new string[] { "Title", "Author","Pages" }))
             {
-                ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", libraryItem.CategoryId);
+                try
+                {
+                    libraryItem.IsBorrowable = true;
+                    db.LibraryItem.Add(libraryItem);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Details", new { id = libraryItem.Id });
+                }
+                catch (DataException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+            }
             return View(libraryItem);
-            }
-            else
+        }
+
+        public ActionResult ReferenceBook(LibraryItem libraryItem)
+        {
+            /*if (libraryItem.Id == null)
             {
-                return RedirectToAction("NotBorrowable");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }*/
+            var referenceBook = new ReferenceBook { };
+
+            //LibraryItem Item = db.LibraryItem.Find(libraryItem.Id);
+            return View(referenceBook);
+
+        }
+
+        [HttpPost, ActionName("ReferenceBook")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReferenceBookPost(LibraryItem libraryItem)
+        {
+            /*if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }*/
+            var referenceBook = new ReferenceBook { };
+            if (TryUpdateModel(referenceBook, "",
+               new string[] { "Title", "Author", "Pages" }))
+            {
+                try
+                {
+                    libraryItem.IsBorrowable = false;
+                    db.LibraryItem.Add(libraryItem);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Details", new { id = libraryItem.Id });
+                }
+                catch (DataException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
             }
+            return View(libraryItem);
+        }
+
+        public ActionResult DVD(LibraryItem libraryItem)
+        {
+            /*if (libraryItem.Id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }*/
+            var dvd = new DVD { };
+
+            //LibraryItem Item = db.LibraryItem.Find(libraryItem.Id);
+            return View(dvd);
+
+        }
+
+        [HttpPost, ActionName("DVD")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DVDPost(LibraryItem libraryItem)
+        {
+            /*if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }*/
+            var dvd = new DVD { };
+            if (TryUpdateModel(dvd, "",
+               new string[] { "Title", "RunTimeMinutes" }))
+            {
+                try
+                {
+                    libraryItem.IsBorrowable = true;
+                    db.LibraryItem.Add(libraryItem);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Details", new { id = libraryItem.Id });
+                }
+                catch (DataException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+            }
+            return View(libraryItem);
+        }
+
+        public ActionResult AudioBook(LibraryItem libraryItem)
+        {
+            /*if (libraryItem.Id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }*/
+            var audioBook = new AudioBook { };
+
+            //LibraryItem Item = db.LibraryItem.Find(libraryItem.Id);
+            return View(audioBook);
+
+        }
+
+        [HttpPost, ActionName("AudioBook")]
+        [ValidateAntiForgeryToken]
+        public ActionResult AudioBookPost(LibraryItem libraryItem)
+        {
+            /*if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }*/
+
+            //Have to create the right class (audioBook here) so that the required fields are right.
+            var audioBook = new AudioBook { };
+            if (TryUpdateModel(audioBook, "",
+               new string[] { "Title", "RunTimeMinutes" }))
+            {
+                try
+                {
+                    libraryItem.IsBorrowable = true;
+                    db.LibraryItem.Add(libraryItem);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Details", new { id = libraryItem.Id });
+                }
+                catch (DataException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+            }
+            return View(libraryItem);
+        }
+
+
+        public ActionResult RedirectToCheckOut(int? id)
+        {
+            LibraryItem libraryItem = db.LibraryItem.Find(id);
+            return RedirectToAction("CheckOut", libraryItem);
+
+        }
+
+        [HttpGet]
+        [ActionName("CheckOut")]
+        public ActionResult CheckOut_Get(LibraryItem libraryItem)
+        {
+            if (libraryItem == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var checkOut = new CheckOut { };
+            return View(checkOut);
+
         }
 
         [HttpPost, ActionName("CheckOut")]
         [ValidateAntiForgeryToken]
-        public ActionResult CheckOutPost(int? id)
+        public ActionResult CheckOutPost(LibraryItem libraryItem)
         {
-            if (id == null)
+            if (libraryItem == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var libraryItemToUpdate = db.LibraryItem.Find(id);
-                if (TryUpdateModel(libraryItemToUpdate, "",
-                   new string[] { "Borrower", "BorrowDate" }))
-                {
-                    try
-                    {
-                        db.SaveChanges();
 
-                        return RedirectToAction("Details", new { id = id });
-                    }
-                    catch (DataException /* dex */)
-                    {
-                        //Log the error (uncomment dex variable name and add a line here to write a log.
-                        ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-                    }
+            var checkOut = new CheckOut { };
+            
+                try
+                {
+                    
+                    db.LibraryItem.Add(libraryItem);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Details", new { id = libraryItem.Id });
                 }
-                return View(libraryItemToUpdate);
+                catch (DataException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", libraryItem.CategoryId);
+            return View(checkOut);
         }
 
         public ActionResult NotBorrowable()
@@ -182,8 +333,8 @@ namespace ConsidLibrary.Controllers
                     return View(libraryItem);
                 }
             }
-            
-                return RedirectToAction("ItemNotBorrowed");
+
+            return RedirectToAction("ItemNotBorrowed");
 
         }
 
@@ -194,21 +345,21 @@ namespace ConsidLibrary.Controllers
 
         // GET: LibraryItem/Edit/5
         public ActionResult Edit(int? id)
-         {
-             if (id == null)
-             {
-                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-             }
-             LibraryItem libraryItem = db.LibraryItem.Find(id);
-             if (libraryItem == null)
-             {
-                 return HttpNotFound();
-             }
-             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", libraryItem.CategoryId);
-             return View(libraryItem);
-         }
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LibraryItem libraryItem = db.LibraryItem.Find(id);
+            if (libraryItem == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", libraryItem.CategoryId);
+            return View(libraryItem);
+        }
 
-        
+
 
         // POST: LibraryItem/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -219,6 +370,7 @@ namespace ConsidLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 db.Entry(libraryItem).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
